@@ -45,12 +45,18 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
+quickdb.json
 
 # Runtime data
 pids
 *.pid
 *.seed
 *.pid.lock
+
+#lock files
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
