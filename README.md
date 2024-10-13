@@ -1,85 +1,159 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# TI JOBS BOT
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+**TI JOBS BOT** is an automated tool built with NestJS that scrapes LinkedIn for information on job offers in the IT and software development sectors in Colombia. It uses a Telegram bot to send these offers to a channel, facilitating quick access to tech job opportunities.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Scraping](#scraping)
+- [Database](#database)
+- [File Handling](#file-handling)
+- [Telegram Service](#telegram-service)
+- [Maintenance](#maintenance)
+- [Contributing](#contributing)
+- [License](#license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- **LinkedIn Scraping**: Automatically extracts IT and software development jobs from LinkedIn.
+- **Automated Notifications**: Uses a Telegram bot to send alerts to a channel with the latest job offers.
+- **Data Storage**: Utilizes QuickDB to store already sent jobs, avoiding duplicates and keeping a log of fetched jobs.
+- **Periodic Updates**: Performs scraping every 10 minutes and sends updated job posts every half hour.
+- **Flexible Integration**: Easy to configure and modify based on your needs.
 
-```bash
-$ pnpm install
-```
+## Technologies Used
 
-## Compile and run the project
+- **NestJS**: Backend framework used for the project.
+- **Cheerio**: Tool used for LinkedIn scraping.
+- **QuickDB**: Local database used to manage jobs and avoid duplicates in the Telegram bot.
+- **Telegram Bot API**: To send job offers to a specific Telegram channel.
+- **TypeScript**: For writing typed, robust, and maintainable code.
 
-```bash
-# development
-$ pnpm run start
+## Installation
 
-# watch mode
-$ pnpm run start:dev
+1. **Clone the repository**
 
-# production mode
-$ pnpm run start:prod
-```
+   ```bash
+   git clone https://github.com/your_user/ti-jobs-bot.git
+   ```
 
-## Run tests
+2. **Navigate to the project directory**
 
-```bash
-# unit tests
-$ pnpm run test
+   ```bash
+   cd ti-jobs-bot
+   ```
 
-# e2e tests
-$ pnpm run test:e2e
+3. **Install dependencies**
 
-# test coverage
-$ pnpm run test:cov
-```
+   Make sure you have `pnpm` installed for package management. If you don't have it, you can install it by following the instructions on their [official website](https://pnpm.io/installation).
 
-## Resources
+   ```bash
+   pnpm install
+   ```
 
-Check out a few resources that may come in handy when working with NestJS:
+4. **Add pnpm-lock.yaml to the repository**
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+   Commit the `pnpm-lock.yaml` file to ensure dependency consistency across environments.
 
-## Support
+5. **Create a `.env` file**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   Create a `.env` file in the project root and configure the necessary environment variables. An example of variables would be:
 
-## Stay in touch
+   ```env
+   BOT_TOKEN=your_telegram_bot_token
+   CHANNEL_ID=your_telegram_chat_id
+   ```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+6. **Build the project**
 
-## License
+   ```bash
+   pnpm run build
+   ```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+7. **Start the application**
+
+   ```bash
+   pnpm run start:prod
+   ```
+
+## Configuration
+
+- **Environment Variables**:
+
+  - `BOT_TOKEN`: The Telegram bot token used to send messages.
+  - `CHANNEL_ID`: The ID of the channel or chat where job offers will be sent.
+
+- **Scraping Configuration**: Scraping is set up to gather job offers in the IT and software development sectors. You can modify scraping parameters in the config file if you need to expand or change the search criteria.
+
+## Usage
+
+Once you’ve configured the environment variables, the application will scrape LinkedIn every hour and send job offers to the Telegram channel.
+
+The Telegram bot sends a message with the following structure:
+
+- **Job Title**: 💼 Job Title
+- **Company**: 🏢 Company
+- **Location**: 📍 Location
+- **Posted Date**: 📅 Date
+- **Job Link**: 🔗 URL
+- **Company Profile**: 🌐 Profile
+
+Each message includes job details, along with direct links to the job offer and the company profile.
+
+## Scraping
+
+Scraping is done using Playwright or Cheerio. The following data is extracted:
+
+- Job Title
+- Company
+- Location
+- Posted Date
+- Job URL
+- Company Profile URL
+- Salary (if available)
+
+### Extracting Job ID
+
+The ID of each job is extracted directly from the URL before the `position` query parameter, ensuring each job has a unique identifier.
+
+## Database
+
+**QuickDB** is used to store two types of information:
+
+1. **Jobs**: Stores job offers fetched via scraping.
+
+Services are implemented to extend a base class that initializes QuickDB for each corresponding table.
+
+## File Handling
+
+Company images and other related files are handled through an endpoint in the backend. If an image is empty or unavailable, a default image located in the `assets` folder is used.
+
+## Telegram Service
+
+The Telegram bot communicates using the `typescript-telegram-bot-api` library and is responsible for sending formatted job offers to a specific Telegram channel.
+
+Telegram messages are enriched with emojis and bold text for better readability.
+
+## Maintenance
+
+### Scraping Updates
+
+It is recommended to update scraping periodically to adapt to any changes in LinkedIn's DOM. LinkedIn’s HTML structure may vary, affecting the ability to correctly extract job offer data.
+
+### Database Backup
+
+Since QuickDB is a local database, it’s recommended to periodically back up the `data/jobs.json` and `data/jobs-sent.json` files to avoid data loss.
+
+## Contributing
+
+Contributions are welcome! If you want to improve the project, follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/new-feature`).
+3. Make your changes and commit them (`git commit -am 'Added new feature'`).
+4. Push your branch (`git push origin feature/new-feature`).
+5. Open a Pull Request.
