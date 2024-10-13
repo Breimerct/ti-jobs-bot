@@ -2,10 +2,10 @@ import * as cheerio from 'cheerio';
 
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger } from '@nestjs/common';
-import axios, { AxiosError } from 'axios';
 
 import { Job } from 'src/local-db/local-db.types';
 import { JobDbService } from 'src/local-db/job-db.service';
+import axios from 'axios';
 
 @Injectable()
 export class ScrapingService {
