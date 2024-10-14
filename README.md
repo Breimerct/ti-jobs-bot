@@ -15,7 +15,6 @@
 - [Telegram Service](#telegram-service)
 - [Maintenance](#maintenance)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -143,10 +142,6 @@ Telegram messages are enriched with emojis and bold text for better readability.
 ### Scraping Updates
 
 It is recommended to update scraping periodically to adapt to any changes in LinkedIn's DOM. LinkedIn’s HTML structure may vary, affecting the ability to correctly extract job offer data.
-
-### Database Backup
-
-Since QuickDB is a local database, it’s recommended to periodically back up the `data/jobs.json` and `data/jobs-sent.json` files to avoid data loss.
 
 ## Contributing
 
