@@ -121,7 +121,7 @@ The ID of each job is extracted directly from the URL before the `position` quer
 
 ## Database
 
-**QuickDB** is used to store two types of information:
+**QuickDB** is used to store one types of information:
 
 1. **Jobs**: Stores job offers fetched via scraping.
 
