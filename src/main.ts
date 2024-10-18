@@ -1,12 +1,19 @@
+import * as express from 'express';
+import * as serverless from 'serverless-http';
+
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NextFunction, Request, Response } from 'express';
 
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
+import { ExpressAdapter } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 
 async function bootstrap() {
-  const PORT = process.env.PORT || 3000;
-  const app = await NestFactory.create(AppModule);
+  const server = express();
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+  const configService = app.get(ConfigService);
+  const PORT = configService.get('PORT');
 
   app.enableCors({
     origin: '*',
@@ -31,7 +38,7 @@ async function bootstrap() {
     }
   });
 
-  await app
+  app
     .listen(PORT)
     .then(() => {
       console.log(`Server is running on http://localhost:${PORT}`);
@@ -39,5 +46,8 @@ async function bootstrap() {
     .catch((error) => {
       console.error(`Error starting server: ${error.message}`);
     });
+
+  return server;
 }
+
 bootstrap();

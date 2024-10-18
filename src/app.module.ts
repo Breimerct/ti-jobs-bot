@@ -6,9 +6,14 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TelegramBotModule } from './telegram-bot/telegram-bot.module';
 import { join } from 'path';
 
+const { NODE_ENV } = process.env;
+
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
+    ConfigModule.forRoot({
+      envFilePath: [NODE_ENV === 'prod' ? '.env' : `.env.${NODE_ENV}`],
+      isGlobal: true,
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'src', 'assets'),
     }),
