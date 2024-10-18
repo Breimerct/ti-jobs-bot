@@ -85,7 +85,7 @@ export class ScrapingService {
     return jobs;
   }
 
-  @Cron(CronExpression.EVERY_10_SECONDS, { timeZone: 'America/Bogota' })
+  @Cron(CronExpression.EVERY_10_MINUTES, { timeZone: 'America/Bogota' })
   async handleCron() {
     try {
       const jobs = await this.scrapeLinkedInJobs();
