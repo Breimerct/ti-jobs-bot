@@ -11,7 +11,7 @@ const { NODE_ENV } = process.env;
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [NODE_ENV === 'prod' ? '.env' : `.env.${NODE_ENV}`],
+      envFilePath: [!NODE_ENV || NODE_ENV === 'prod' ? '.env' : `.env.${NODE_ENV}`],
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
