@@ -22,7 +22,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({
-                envFilePath: [NODE_ENV === 'prod' ? '.env' : `.env.${NODE_ENV}`],
+                envFilePath: [!NODE_ENV || NODE_ENV === 'prod' ? '.env' : `.env.${NODE_ENV}`],
                 isGlobal: true,
             }),
             serve_static_1.ServeStaticModule.forRoot({
