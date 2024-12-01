@@ -19,8 +19,5 @@ RUN npm run build
 # 7. Exponer el puerto en el que se ejecutará la aplicación
 EXPOSE 3000
 
-# 8. Comando para construir la aplicación
-CMD ["npm", "run", "build"]
-
 # 9. Comando para ejecutar la aplicación
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:build"]
