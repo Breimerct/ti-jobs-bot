@@ -48,7 +48,7 @@ export class TelegramBotService implements OnModuleInit {
     });
   }
 
-  @Cron(CronExpression.EVERY_30_MINUTES_BETWEEN_10AM_AND_7PM, {
+  @Cron(CronExpression.EVERY_30_MINUTES_BETWEEN_9AM_AND_6PM, {
     timeZone: 'America/Bogota',
   })
   async handleCron() {

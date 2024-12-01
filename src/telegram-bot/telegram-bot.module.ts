@@ -1,10 +1,11 @@
+import { LocalDbModule } from 'src/local-db/local-db.module';
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TelegramBotController } from './telegram-bot.controller';
 import { TelegramBotService } from './telegram-bot.service';
 
 @Module({
-    imports: [ScheduleModule.forRoot()],
+    imports: [ScheduleModule.forRoot(), LocalDbModule],
     controllers: [TelegramBotController],
     providers: [TelegramBotService],
 })

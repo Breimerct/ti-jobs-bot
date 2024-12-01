@@ -45,7 +45,7 @@ export class ScrapingService {
     let jobs: Record<string, Job> = {};
 
     jobCards.each((_, jobCard) => {
-      const jobElement = $(jobCard);
+      const jobElement =  $(jobCard)
 
       const companyImg =
         jobElement.find('.search-entity-media img').attr('src') || '';

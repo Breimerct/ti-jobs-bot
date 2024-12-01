@@ -1,5 +1,4 @@
 import * as express from 'express';
-import * as serverless from 'serverless-http';
 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NextFunction, Request, Response } from 'express';

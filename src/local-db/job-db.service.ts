@@ -1,31 +1,17 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { JSONDriver, QuickDB } from 'quick.db';
 
-import { ConfigService } from '@nestjs/config';
 import { Job } from './local-db.types';
-import { MongoDriver } from 'quickmongo';
 
 @Injectable()
 export class JobDbService implements OnModuleInit {
-  constructor(
-    private readonly configService: ConfigService,
-  ) {}
-
-  private readonly logger = new Logger(JobDbService.name);
   protected db: QuickDB;
   private tableName = 'jobs';
   private jobTable = new QuickDB<Record<string, Job>>();
-  private readonly MONGODB_URI = this.configService.get<string>('MONGODB_URI');
-  
+
   async onModuleInit() {
-    const driver = new MongoDriver(this.MONGODB_URI);
-
-    await driver.connect().then(() => {
-      this.logger.log('Connected to MongoDB');
-    });
-
     this.db = new QuickDB({
-      driver,
+      driver: new JSONDriver(),
       table: this.tableName,
     });
     this.jobTable = this.db.table<Record<string, Job>>(this.tableName);
