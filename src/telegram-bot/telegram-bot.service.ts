@@ -8,6 +8,11 @@ import { handles } from './telegram-bot';
 
 @Injectable()
 export class TelegramBotService implements OnModuleInit {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly jobDbService: JobDbService,
+  ) {}
+
   private readonly logger = new Logger(TelegramBotService.name);
   private telegramBot: TelegramBot;
   private readonly telegramBotToken =
@@ -15,10 +20,6 @@ export class TelegramBotService implements OnModuleInit {
   private readonly chatId = this.configService.get<string>('CHANNEL_ID');
   protected botName: string;
 
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly jobDbService: JobDbService,
-  ) {}
 
   async onModuleInit() {
     this.telegramBot = new TelegramBot({ botToken: this.telegramBotToken });
