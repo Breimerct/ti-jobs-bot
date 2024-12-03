@@ -1,21 +1,19 @@
-import * as express from 'express';
-
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NextFunction, Request, Response } from 'express';
 
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import { ExpressAdapter } from '@nestjs/platform-express';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 
 async function bootstrap() {
-  const server = express();
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   const PORT = process.env.PORT || 3000;
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.enableCors({
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
   app.setGlobalPrefix('api/v1');
 
@@ -36,16 +34,16 @@ async function bootstrap() {
     }
   });
 
-  app
+  await app
     .listen(PORT)
-    .then(() => {
+    .then(async () => {
       console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Running on ${await app.getUrl()}`);
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(`Error starting server: ${error.message}`);
     });
-
-  return server;
 }
 
 bootstrap();
+
