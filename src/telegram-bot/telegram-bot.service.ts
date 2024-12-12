@@ -20,10 +20,11 @@ export class TelegramBotService implements OnModuleInit {
   private readonly chatId = this.configService.get<string>('CHANNEL_ID');
   protected botName: string;
 
-
   async onModuleInit() {
-    this.telegramBot = new TelegramBot({ botToken: this.telegramBotToken });
-    this.telegramBot.startPolling();
+    this.telegramBot = new TelegramBot({
+      botToken: this.telegramBotToken,
+      autoRetry: true,
+    });
 
     try {
       const { first_name: botName } = await this.telegramBot.getMe();

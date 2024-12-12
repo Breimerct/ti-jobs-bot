@@ -1,4 +1,4 @@
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { JobsModule } from './jobs/jobs.module';
 import { Module } from '@nestjs/common';
@@ -9,15 +9,16 @@ import { TelegramBotModule } from './telegram-bot/telegram-bot.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
     MongooseModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('MONGO_URI'),
       }),
       inject: [ConfigService],
-    }),
-    ConfigModule.forRoot({
-      envFilePath: ".env.dev",
-      isGlobal: true,
     }),
     ScheduleModule.forRoot(),
     TelegramBotModule,
