@@ -1,5 +1,4 @@
 export type Job = {
-  id: string;
   title: string;
   company: string;
   companyImg?: string;

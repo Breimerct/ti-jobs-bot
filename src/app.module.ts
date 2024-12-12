@@ -1,20 +1,28 @@
-import { ConfigModule } from '@nestjs/config';
-import { LocalDbModule } from './local-db/local-db.module';
+import { ConfigModule, ConfigService } from '@nestjs/config'
+
+import { JobsModule } from './jobs/jobs.module';
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ScrapingModule } from './scraping/scraping.module';
 import { TelegramBotModule } from './telegram-bot/telegram-bot.module';
 
 @Module({
   imports: [
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+      inject: [ConfigService],
+    }),
     ConfigModule.forRoot({
-      envFilePath: ".env",
+      envFilePath: ".env.dev",
       isGlobal: true,
     }),
     ScheduleModule.forRoot(),
     TelegramBotModule,
-    LocalDbModule,
     ScrapingModule,
+    JobsModule,
   ],
   controllers: [],
   providers: [],
