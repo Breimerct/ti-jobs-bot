@@ -3,13 +3,15 @@ import * as cheerio from 'cheerio';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger } from '@nestjs/common';
 
-import { Job } from 'src/local-db/local-db.types';
-import { JobDbService } from 'src/local-db/job-db.service';
+import { Job } from '@/types';
+import { JobsService } from '@/jobs/jobs.service';
 import axios from 'axios';
 
 @Injectable()
 export class ScrapingService {
-  constructor(private readonly jobDbService: JobDbService) {}
+  constructor(
+    private readonly jobsService: JobsService
+  ) {}
 
   private readonly logger = new Logger(ScrapingService.name);
 
@@ -23,7 +25,7 @@ export class ScrapingService {
       return jobDetailsList;
     } catch (error) {
       this.logger.error('Error en el scraping: ', error);
-      return {};
+      return [];
     }
   }
 
@@ -37,15 +39,15 @@ export class ScrapingService {
     }
   }
 
-  private extractJobInfo(html: string) {
-    if (!html) return {};
+  private extractJobInfo(html: string): Job[] {
+    if (!html) return [];
 
     const $ = cheerio.load(html);
     const jobCards = $('.base-search-card');
-    let jobs: Record<string, Job> = {};
+    let jobs: Job[] = [];
 
     jobCards.each((_, jobCard) => {
-      const jobElement =  $(jobCard)
+      const jobElement = $(jobCard);
 
       const companyImg =
         jobElement.find('.search-entity-media img').attr('src') || '';
@@ -62,24 +64,18 @@ export class ScrapingService {
       const companyProfileUrl =
         jobElement.find('.base-search-card__subtitle a').attr('href') || '';
 
-      const jobIdMatch = jobUrl.match(/view\/.*?-(\d+)\?/);
-      const id = jobIdMatch ? jobIdMatch[1] : '';
-
-      if (!id) return;
-
-      jobs = {
+      jobs = [
         ...jobs,
-        [id]: {
-          id,
+        {
           title,
           company,
+          companyImg,
           location,
           postedDate,
           jobUrl,
           companyProfileUrl,
-          companyImg,
         },
-      };
+      ];
     });
 
     return jobs;
@@ -92,7 +88,9 @@ export class ScrapingService {
 
       if (!Object.keys(jobs).length) return;
 
-      this.jobDbService.addJobs(jobs);
+      await this.jobsService.deleteAllJobs();
+      await this.jobsService.saveManyJobs(jobs);
+
       this.logger.log('Scraping realizado con éxito');
     } catch (error) {
       this.logger.error('Error al realizar el scraping: ', error);

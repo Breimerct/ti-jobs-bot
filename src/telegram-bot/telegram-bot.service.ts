@@ -2,7 +2,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 
 import { ConfigService } from '@nestjs/config';
-import { JobDbService } from 'src/local-db/job-db.service';
+import { JobsService } from '@/jobs/jobs.service';
 import { TelegramBot } from 'typescript-telegram-bot-api';
 import { handles } from './telegram-bot';
 
@@ -10,7 +10,7 @@ import { handles } from './telegram-bot';
 export class TelegramBotService implements OnModuleInit {
   constructor(
     private readonly configService: ConfigService,
-    private readonly jobDbService: JobDbService,
+    private readonly jobsService: JobsService,
   ) {}
 
   private readonly logger = new Logger(TelegramBotService.name);
@@ -53,10 +53,9 @@ export class TelegramBotService implements OnModuleInit {
     timeZone: 'America/Bogota',
   })
   async handleCron() {
-    const jobs = await this.jobDbService.getAllJobs();
-    const jobId = Object.keys(jobs);
-    const randomIndex = Math.floor(Math.random() * jobId.length);
-    const job = jobs[jobId[randomIndex]];
+    const jobs = await this.jobsService.getAllJobs();
+    const randomIndex = Math.floor(Math.random() * jobs.length);
+    const job = jobs[randomIndex];
 
     const jobMessage =
       `✨ **Vacante**: ${job.title}\n` +
