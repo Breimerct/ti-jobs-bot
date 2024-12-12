@@ -25,6 +25,7 @@ export class TelegramBotService implements OnModuleInit {
       botToken: this.telegramBotToken,
       autoRetry: true,
     });
+    this.telegramBot.startPolling();
 
     try {
       const { first_name: botName } = await this.telegramBot.getMe();
