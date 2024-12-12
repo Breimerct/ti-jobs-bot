@@ -4,7 +4,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ScrapingService } from './scraping.service';
 
 @Module({
-    imports: [ScheduleModule.forRoot(), LocalDbModule],
+    imports: [LocalDbModule],
     providers: [ScrapingService],
     exports: [ScrapingService],
 })
