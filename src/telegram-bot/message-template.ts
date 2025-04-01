@@ -6,6 +6,8 @@ import {
   ReplyKeyboardRemove,
 } from 'typescript-telegram-bot-api/dist/types';
 
+import { CommandType } from '@/types';
+
 type MessageTemplate = {
   message: (
     strings: TemplateStringsArray,
@@ -81,7 +83,7 @@ export const infoTemplate: MessageTemplate = {
         [
           {
             text: 'Ayuda',
-            callback_data: '/help',
+            callback_data: CommandType.HELP,
           },
         ],
       ],

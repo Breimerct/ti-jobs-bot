@@ -8,3 +8,10 @@ export type Job = {
   salary?: string;
   companyProfileUrl?: string;
 };
+
+export enum CommandType {
+  START = '/start',
+  HELP = '/help',
+  CHANNEL = '/channel',
+  INFO = '/info',
+}

@@ -6,6 +6,7 @@ import {
   startTemplate,
 } from './message-template';
 
+import { CommandType } from '@/types';
 import { TelegramBot } from 'typescript-telegram-bot-api';
 
 export const handles = (botName: string, telegramBot: TelegramBot) => ({
@@ -21,7 +22,7 @@ async function onMessage(
   telegramBot: TelegramBot,
   botName: string,
 ) {
-  if (message.text === '/start') {
+  if (message.text === CommandType.START) {
     const startText = startTemplate.message`${message.from.first_name} ${botName}`;
     const infoText = infoTemplate.message`${message.from.first_name} ${botName}`;
 
@@ -40,7 +41,7 @@ async function onMessage(
     return;
   }
 
-  if (message.text === '/help') {
+  if (message.text === CommandType.HELP) {
     const text = helpTemplate.message`${message.from.first_name} ${botName}`;
 
     telegramBot.sendMessage({
@@ -51,7 +52,7 @@ async function onMessage(
     return;
   }
 
-  if (message.text === '/channel') {
+  if (message.text === CommandType.CHANNEL) {
     const text = channelTemplate.message`${message.from.first_name} ${botName}`;
 
     telegramBot.sendMessage({
@@ -63,7 +64,7 @@ async function onMessage(
     return;
   }
 
-  if (message.text === '/info') {
+  if (message.text === CommandType.INFO) {
     const text = infoTemplate.message`${message.from.first_name} ${botName}`;
 
     telegramBot.sendMessage({
