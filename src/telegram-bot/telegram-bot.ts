@@ -6,7 +6,7 @@ import {
   startTemplate,
 } from './message-template';
 
-import { CommandType } from '@/types';
+import { CommandType } from '../types';
 import { TelegramBot } from 'typescript-telegram-bot-api';
 
 export const handles = (botName: string, telegramBot: TelegramBot) => ({
