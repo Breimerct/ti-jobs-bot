@@ -2,7 +2,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 
 import { ConfigService } from '@nestjs/config';
-import { JobsService } from '@/jobs/jobs.service';
+import { JobsService } from '../jobs/jobs.service';
 import { TelegramBot } from 'typescript-telegram-bot-api';
 import { handles } from './telegram-bot';
 

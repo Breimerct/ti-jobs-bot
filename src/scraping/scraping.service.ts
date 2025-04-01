@@ -4,7 +4,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger } from '@nestjs/common';
 
 import { Job } from '../types';
-import { JobsService } from '@/jobs/jobs.service';
+import { JobsService } from '../jobs/jobs.service';
 import axios from 'axios';
 
 @Injectable()
