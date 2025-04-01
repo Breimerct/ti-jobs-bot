@@ -6,7 +6,7 @@ import {
   ReplyKeyboardRemove,
 } from 'typescript-telegram-bot-api/dist/types';
 
-import { CommandType } from '@/types';
+import { CommandType } from '../types';
 
 type MessageTemplate = {
   message: (
